@@ -8,7 +8,8 @@ Scamp tutorials and knowledge base
 
 
 ## Installing
-- pip3 install --user scamp
+- pip3 install scamp
+- pip3 install scamp_extensions
 
 - Install Lilypond from [here](http://lilypond.org/development.html)
 
@@ -20,6 +21,6 @@ You will need
 
 Available from https://visualstudio.microsoft.com/visual-cpp-build-tools/
 
-- pip3 install abjad
+- pip3 install abjad==3.4
 
 
