@@ -5,6 +5,7 @@ Scamp tutorials and knowledge base
 ## References
 
 - [Homepage](http://scamp.marcevanstein.com/)
+- [LoopMidi](https://www.tobias-erichsen.de/software/loopmidi.html)
 
 
 ## Installing
