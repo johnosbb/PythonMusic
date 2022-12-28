@@ -15,7 +15,7 @@ Scamp tutorials and knowledge base
 
 - pip3 install python-rtmidi --use-pep517
 
-You will need
+For python-rtmidi, you will first need to install:
 
 ![image](https://user-images.githubusercontent.com/12407183/209846499-611bf8ba-43e3-4943-8283-1fb85199566f.png)
 
