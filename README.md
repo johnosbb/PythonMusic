@@ -26,9 +26,26 @@ Available from https://visualstudio.microsoft.com/visual-cpp-build-tools/
 
 
 
-# Using LoopMidi with Scamp
+# Using LoopMidi with Scamp and Reaper
 
-- Installed loopMIDI and added a new virtual MIDI port with it.
+- Installed loopMIDI and add a new virtual MIDI port (MidiLoop) as shown.
+
+![image](https://user-images.githubusercontent.com/12407183/209932117-50b917ec-eb81-4325-a015-2e32bcf7562c.png)
+
+In Reaper go to Options->Preferences and double click the MidiLoop option
+
+![image](https://user-images.githubusercontent.com/12407183/209932329-1ab6c0f3-afd3-4217-a119-73574e3c618e.png)
+
+Check the "Enable input from this device" option and click OK and the click Apply on the main dialog.
+
+![image](https://user-images.githubusercontent.com/12407183/209932371-a61b94fe-e91e-4321-b0d3-2043d90d243d.png)
+
+Now select an instrument and set its midi input to MidiLoop
+
+![image](https://user-images.githubusercontent.com/12407183/209932594-23a3a428-3fb7-4e49-803a-60c02479b0e5.png)
+
+
+
 
 In MSP:
 - Created a Smart Button
