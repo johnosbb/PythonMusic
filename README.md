@@ -7,6 +7,7 @@ Scamp tutorials and knowledge base
 - [Homepage](http://scamp.marcevanstein.com/)
 - [LoopMidi](https://www.tobias-erichsen.de/software/loopmidi.html)
 - [Scamp Thesis](http://marcevanstein.com/Writings/Evanstein_MAT_Thesis_SCAMP.pdf)
+- [Jack Audio](https://jackaudio.org/downloads/)
 
 
 ## Installing
