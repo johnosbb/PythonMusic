@@ -56,4 +56,6 @@ Now select an instrument and set its midi input to MidiLoop
 LoopMidi is used to create two virtual midi channels.
 Notes are then sent from virtualKeys piano keyboard to Scamp and Scamp then redirects that data to QSynth.
 
+See the send_receive.py example in the repository
+
 
