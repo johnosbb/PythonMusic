@@ -1,4 +1,4 @@
-# scamp
+# Scamp
 Scamp tutorials and knowledge base
 
 
