@@ -10,6 +10,7 @@ Scamp tutorials and knowledge base
 - [Scamp Thesis](http://marcevanstein.com/Writings/Evanstein_MAT_Thesis_SCAMP.pdf)
 - [Jack Audio](https://jackaudio.org/downloads/)
 - [SF2 files for QSynth](https://musical-artifacts.com/)
+- [MIDI note numbers and center frequencies](https://www.inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies)
 
 
 ## Installing
