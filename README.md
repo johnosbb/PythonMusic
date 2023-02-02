@@ -1,6 +1,6 @@
 # Maling Music with Python
 
-- [Scamp](scamp.md)
+- [Scamp](Scamp.md)
 - [Jython Music](jythonmusic.md)
 
 
