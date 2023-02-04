@@ -1,4 +1,4 @@
-# Maling Music with Python
+# Making Music with Python
 
 - [Scamp](Scamp.md)
 - [Jython Music](jythonmusic.md)
