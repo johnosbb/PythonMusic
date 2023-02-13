@@ -26,7 +26,8 @@ class Generator:
         self.level1 = 2
         self.level2 = 3
         self.duration = 0.25
-        self.rythm = Rythm()
+        self.rythm = Rythm(4,4)
+        self.rythm.generate()
         self.rythmIterator =  iter(self.rythm)
         
 
@@ -103,7 +104,7 @@ class Generator:
         # we start with the root note
         volume = 0.8
         phrase = []
-        motif = Motif(None,self.pentatonic)
+        motif = Motif(None,self.pentatonic,Rythm(),BEATS_PER_BAR,2)
         print("Opening bar")
         bar,index = self.CreateBar( True, False,0)
         for note in bar:
@@ -130,46 +131,113 @@ class Generator:
             phrase.append(note)    
         return phrase
 
+    def evaluateTone(self,chord,tone):
+        if(tone):
+            toneType = chord.identifyToneType(tone)
+            print("Tone {} is  {}".format(tone,toneType))
+        else:
+            print("Tone {} is not valid".format(tone))   
+
+    def PlayMotif(self,notes,chord):
+        print("........{}.........".format(chord))
+        for note in notes:
+            print("{}".format(note.show()))
+            self.violin.play_note(note.pitch,note.volume,note.length)
+        print("....................")
+
 
     def PlayOutput(self):
+        #self.session.start_transcribing()
         pitch = 0
         beat = 1
-        scale = Scale.major(60,True)
+        CScale = [60,62,64,65,67,69,71,72]
+        scale = Scale.major(60,0,True)
         # scale.pitch_to_degree(pitch)
         c = Chord("C Major" ,60,1,1,scale)
-        c.generateNotes()
-        passing = c.getPassingNote(1,3)
-        self.violin.play_note(passing,c.volume,c.length)
-        adjacent = c.getAdjacentNote(3,1)
-        self.violin.play_note(adjacent,c.volume,c.length)
-        passing = c.getPassingNote(3,5)
-        self.violin.play_note(passing,c.volume,c.length)
-        self.violin.play_chord(c.notes,c.volume,c.length,"arpeggiate")
-        if(c.isChordTone(passing)):
-            print("This is a chord tone")
+        f = Chord("C Major" ,65,1,1,scale)
+        g = Chord("C Major" ,67,1,1,scale)
+        a = Chord("C Major" ,69,1,1,scale)
+        e = Chord("C Major" ,69,1,1,scale)
+        for note in range(8):
+            print("Degree {} Pitch {} ".format(note,scale.degree_to_pitch(note)))
+        for note in CScale:
+            print("pitch {} Degree {} ".format(note,scale.pitch_to_degree(note)))
+        for n in range(2): 
+            print("-----------------------------------")   
+            motif = Motif(c,scale,self.rythm,BEATS_PER_BAR,2)
+            CMotif = motif.Generate()
+            genome = motif.toGenome()
+            motif.Show()
+            if(motif.isValid()):
+                print("Motif is valid")
+            else:
+                print("Motif is invalid")    
+            print("Motif Genome {}".format(genome))
+            motif2 = Motif(c,scale,self.rythm,BEATS_PER_BAR,2)
+            motif2.Show()
+
+            print("-----------------------------------")
+            self.PlayMotif(CMotif,"C")
+            motif = Motif(g,self.pentatonic,self.rythm,BEATS_PER_BAR,2)
+            GMotif = motif.Generate()
+            self.PlayMotif(GMotif,"G")
+            motif = Motif(a,self.pentatonic,self.rythm,BEATS_PER_BAR,2)
+            AMotif = motif.Generate()
+            self.PlayMotif(AMotif,"Am")
+            motif = Motif(f,self.pentatonic,self.rythm,BEATS_PER_BAR,2)
+            FMotif = motif.Generate()
+            self.PlayMotif(FMotif,"F")
+
+        # stop transcribing and save the
+        # note events as a performance
+        #performance = self.session.stop_transcribing()
+        # quantize and convert the performance to
+        # a Score object and open it as a PDF
+        # (by default this is done via abjad)
+        #performance.to_score(time_signature=["4/4"]).show()    
+        # self.violin.play_note(passing,c.volume,c.length)
+        # adjacent = c.getAdjacentNote(3,1)
+        # self.violin.play_note(adjacent,c.volume,c.length)
+        # passing = c.getPassingNote(3,5)
+        # self.violin.play_note(passing,c.volume,c.length)
+        # self.violin.play_chord(c.notes,c.volume,c.length,"arpeggiate") 
+        # if(c.isChordTone(60)):
+        #     print("This is a chord tone")
+        # else:
+        #     print("This is not a chord tone")  
+        # phrase = self.CreatePhrase()
+        # previous = phrase[0].pitch
+        # # while True:
+        # print("\n : Phrase start ")
+        # if SHOW_SCORE:
+        #     self.session.start_transcribing() 
+        # for note in phrase:
+        #     self.violin.play_note(note.pitch,note.volume,note.length)
+        #     print("Pitch {} Note {} Length {} Interval {}".format(note.pitch,note.name,note.length,note.pitch - previous))
+        #     previous = note.pitch
+        # if SHOW_SCORE:
+        #     self.performance = self.session.stop_transcribing()
+        #     self.performance.to_score(time_signature=["4/4"]).show()
+
+
+
+    def testGenome(self):
+        scale = Scale.major(60,0,True)
+        c = Chord("C Major" ,60,1,1,scale)
+        print("-----------------------------------")   
+        motif = Motif(c,scale,self.rythm,BEATS_PER_BAR,2)
+        CMotif = motif.Generate()
+        genome = motif.toGenome()
+        motif.Show()
+        if(motif.isValid()):
+            print("Motif is valid")
         else:
-            print("This is not a chord tone")   
-        if(c.isChordTone(60)):
-            print("This is a chord tone")
-        else:
-            print("This is not a chord tone")  
-        phrase = self.CreatePhrase()
-        previous = phrase[0].pitch
-        # while True:
-        print("\n : Phrase start ")
-        if SHOW_SCORE:
-            self.session.start_transcribing() 
-        for note in phrase:
-            self.violin.play_note(note.pitch,note.volume,note.length)
-            print("Pitch {} Note {} Length {} Interval {}".format(note.pitch,note.name,note.length,note.pitch - previous))
-            previous = note.pitch
-        if SHOW_SCORE:
-            self.performance = self.session.stop_transcribing()
-            self.performance.to_score(time_signature=["4/4"]).show()
-
-
-
-
+            print("Motif is invalid")    
+        print("Motif Genome {}".format(genome))
+        motif2 = Motif(c,scale,self.rythm,BEATS_PER_BAR,2)
+        motif2.fromGenome(genome)
+        motif2.Show()
+        print("-----------------------------------")
 
 
 
@@ -211,8 +279,9 @@ class Generator:
 
 
 m = Generator()
-m.ShowScale()
-m.Run()        
+#m.ShowScale()
+#m.Run()        
+m.testGenome()
 
 # myclass = Rythm()
 # myiter = iter(myclass)
