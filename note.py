@@ -15,23 +15,56 @@ class Note:
                 'http://www.electronics.dit.ie/staff/tscarff/Music_technology/midi/midi_note_numbers_for_octaves.htm'
     }
 
-    def __init__(self,pitch,volume,length):
+    def __init__(self,pitch=60,volume=1,length=1):
         self.__pitch = pitch
         self.__volume = volume
         self.__length = length
         self.__name = self.PitchToNote(int(pitch))
 
+    def toGenome(self) -> list:
+        pitch = format(int(self.__pitch), '08b')        
+        length = format(int(self.__length * 32), '08b')
+        genome = pitch + length
+        return genome.split()
+
+    def splitByN(self,genome, n):
+        s = ''.join(genome)
+        if len(s) < n:
+            return []
+        elif len(s) == n:
+            return [s]
+        else:
+            return self.splitByN(s[:n], n) + self.splitByN(s[n:], n)
+
+    def splitGenome(self,genome: list,chunkSize : int):
+        for i in range(0, len(genome), chunkSize):
+            yield genome[i:i + chunkSize]
+
+    def fromGenome(self,genome: list) -> tuple:
+        #print(" Note: fromGenome: genome {}".format(genome))
+        parts = self.splitByN(genome,8)
+        # partsList = list(self.splitGenome(genome,8))
+        # pitchPart = ''.join(partsList[0])
+        # lengthPart = ''.join(partsList[1])
+        self.__pitch = int(parts[0],2)    
+        self.__length = int(parts[1],2)/32  
+        self.__name = self.PitchToNote(int(self.__pitch))
+        return self.__pitch,self.__length   
     
     def show(self):    
-        return "Pitch {}, Volume = {}, length = {}".format(self.__pitch,self.__volume, self.__length)   
+        return "Name {}, Pitch {}, Volume = {}, length = {}".format(self.__name,self.__pitch,self.__volume, self.__length)   
 
     def PitchToNote(self,number: int) -> tuple:
         octave = number // self.NOTES_IN_OCTAVE
-        assert octave in self.OCTAVES, self.errors['notes']
-        assert 0 <= number <= 127, self.errors['notes']
-        note = self.NOTES[number % self.NOTES_IN_OCTAVE]
-
-        return note, octave
+        if(octave not in self.OCTAVES):
+            return 'INVALID', 0
+        #assert octave in self.OCTAVES, self.errors['notes']
+        if(0 <= number <= 127):
+            note = self.NOTES[number % self.NOTES_IN_OCTAVE]
+            return note, octave
+        else:
+            return 'INVALID', 0    
+        
 
     def Update(self,pitch):
         self.__name = self.PitchToNote(int(pitch))
